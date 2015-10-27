@@ -1,7 +1,7 @@
 #include "systemc.h"
 
 SC_MODULE (proco) {
-	sc_out<sc_int<8>> addr;
+	sc_out<sc_uint<8> > addr;
 	sc_out <bool> write;
 	sc_out_rv <16> data;
 }
@@ -10,12 +10,12 @@ SC_MODULE (proco) {
 		sensitive << addr << write << data;
 	}
 	
-	void send_data {
-		if (write) {
-		
-		}
-	}
-	}
+//	void send_data {
+//		if (write) {
+//		
+//		}
+//	}
+//	}
 int sc_main(int argc, char* argv[]) {
 
 
