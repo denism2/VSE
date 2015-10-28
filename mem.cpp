@@ -6,6 +6,7 @@ SC_MODULE (mem) {
 	sc_in <bool> wena;
 	sc_inout_rv <16> data;
 	sc_lv<16> ram_data[256];
+	
 	SC_CTOR(mem) {
 		SC_METHOD(read_data);
 		sensitive << addr << wdis << wena;
@@ -14,7 +15,7 @@ SC_MODULE (mem) {
 	}
 	void read_data() {
 		if (!wdis && wena) {
-			data = mem_data[addr.read()];
+			data = ram_data[addr.read()];
 		} else {
 			data = "zzzzzzzzzzzzzzzz";
 		}
