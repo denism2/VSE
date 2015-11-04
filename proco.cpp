@@ -1,19 +1,15 @@
 #include "proco.h"
 
 void proco::send_data() {
-	if (writing) {
+	if (writing && !reading) {
 		addr.read();
 		data.read();
 	}
 }
 
 void proco::read_data() {
-	if (!writing) {
+	if (!writing && reading) {
 		data.write();
 	}
 }
 
-int sc_main(int argc, char* argv[]) {
-
-
-}
