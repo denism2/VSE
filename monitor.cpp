@@ -4,11 +4,11 @@ void monitor::enum_activity() {
 	int reading = 0;
 	int writing = 0;
 	
-	(writable) ? (writable++);
-	(readable) ? (readable++);
-}
-	
-void monitor::display_activity() {
+	if (writable) writing++;
+	if (readable /*&& data == "zzzzzzzzzzzzzzzz"*/) {
+		reading++;
+	}
+
 	//......	
 	cout <<"System actvity of this demo"<< endl;
 	cout <<"	Read access: "<< reading<< endl;

@@ -7,8 +7,10 @@ void proco::send_data() {
 	}
 }
 
-void proco::read_data() {
+void proco::receive_data() {
 	if (!writing && reading) {
+	// à revoir la noton d'écriture dans un port
+	// problème de type pour write()
 		data.write();
 	}
 }

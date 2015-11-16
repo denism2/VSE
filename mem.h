@@ -4,7 +4,7 @@ SC_MODULE (mem) {
 	sc_in<sc_uint<8> > addr;
 	sc_in <bool> wdis;
 	sc_in <bool> wena;
-	sc_inout_rv <16> data;
+	sc_inout_rv<16> data;
 	
 	sc_lv<16> ram_data[256];
 	
