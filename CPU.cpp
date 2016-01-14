@@ -1,6 +1,15 @@
+/*
+* CPU.cpp
+*  Authors: denism2, arctarus44
+*  Date:  Jan 14, 2016
+*/
+
 #include "systemc.h"
 #include "Memory.cpp"
 
+/*
+* processor simulation with simple behaviour
+*/
 SC_MODULE(CPU) {
 
 public:
@@ -18,7 +27,7 @@ public:
 		SC_METHOD(memDone);
 		sensitive(Port_MemDone);
 		dont_initialize();
-		
+
 		m_waitMem = false;
 	}
 
@@ -35,11 +44,11 @@ private:
 	int getRndAddress() {
 		return (rand() % MEM_SIZE);
 	}
-	
+
 	int getRndData() {
 		return rand();
 	}
-	
+
 	void execCycle() {
 		if(m_waitMem) {
 			return;
@@ -52,7 +61,7 @@ private:
 
 		if (f == Memory::FUNC_WRITE)
 			Port_MemData.write(getRndData());
-	
+
 		m_waitMem = true;
 	}
 
@@ -65,24 +74,25 @@ private:
 	}
 };
 
-int sc_main(int argc, char* argv[]) {
+// int sc_main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
 
 	cout << "\n\nCreating Modules............";
-/* Instantiate Modules */
+// Instantiate Modules
 	Memory mem("main_memory");
 	CPU cpu("cpu");
 
-/* Signals */
+// Signals
 	sc_signal<Memory::Function> sigMemFunc;
 	sc_signal<Memory::RETSignal> sigMemDone;
 	sc_signal<int> sigMemAddr;
 	sc_signal<int> sigMemData;
 
-/* The clock that will drive the CPU and Memory*/
+// The clock that will drive the CPU and Memory
 	sc_clock clk;
 	cout << "DONE\nConnecting Modules' Ports...";
 
-/* Connecting module ports with signals */
+//Connecting module ports with signals
 	mem.Port_Func(sigMemFunc);
 	mem.Port_Addr(sigMemAddr);
 	mem.Port_Data(sigMemData);
@@ -96,7 +106,7 @@ int sc_main(int argc, char* argv[]) {
 	cout << "DONE\n" << endl
 		<< "\n\nRunning (press CTRL+C to exit)... ";
 
-/* Start Simulation */
+//Start Simulation
 	sc_start();
 	return 0;
 }
