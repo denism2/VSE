@@ -1,8 +1,19 @@
+/*
+* Memory.cpp
+*  Authors: denism2, arctarus44
+*  Date:  Jan 14, 2016
+*/
+
 #include "systemc.h"
 #define MEM_SIZE 512
 
+/*
+* Memory with control of read/write state 
+* and read/write count
+*/
 SC_MODULE(Memory) {
 
+//Instanciate state memory
 public:
 	enum Function {
 		FUNC_NONE,
@@ -16,7 +27,8 @@ public:
 		RSIG_WRITE_FIN,
 		RSIG_ERROR
 	};
-	
+
+//
 	sc_in<bool> Port_CLK;
 	sc_in<Function> Port_Func;
 
@@ -57,6 +69,7 @@ private:
 	int m_readsCnt;
 	int m_errorsCnt;
 
+// get data at current address
 RETSignal read() {
 	if (m_errorCode == 0) {
 		Port_Data.write(m_data[m_curAddr]);
@@ -68,6 +81,7 @@ RETSignal read() {
 	}
 }
 
+// set information at current address
 RETSignal write() {
 	if (m_errorCode == 0) {
 		m_data[m_curAddr] = m_curData;
@@ -80,6 +94,7 @@ RETSignal write() {
 }
 
 void execute() {
+// Controls of memory functions
 	if (m_curFunc != Memory::FUNC_NONE) {
 		m_clkCnt++;
 		if (m_clkCnt == 100) {
@@ -106,9 +121,10 @@ void execute() {
 	}
 };
 
-int sc_main(int argc, char* argv[]) {
+// DEBUG ONLY
+// int sc_main(int argc, char* argv[]) {
 
-	Memory mem("main_memory");
-	sc_start();
-	return 0;
-}
+// 	Memory mem("main_memory");
+// 	sc_start();
+// 	return 0;
+// }
